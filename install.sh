@@ -41,10 +41,6 @@ openssl req -x509 -new -newkey rsa:2048 -nodes \
 docker secret create docker-host-cert.v1 /tmp/docker.cert
 docker secret create docker-host-key.v1 /tmp/docker.key
 
-# -- solr-textbook setup
-sudo chown -R 8983:8983 /apps/docker/logs/solr-textbook/app
-docker network create -d overlay --attachable solr_textbook_default
-
 # -- orcid
 sudo chown -R 9999:docker /apps/docker/logs/orcid/app
 docker network create -d overlay --attachable orcid_default
@@ -58,8 +54,10 @@ docker secret create orcid-cert.v1 /tmp/orcid.cert
 docker secret create orcid-key.v1 /tmp/orcid.key
 
 # -- search
+mkdir -p /apps/docker/volumes/search/db
 sudo chown -R 9999:docker /apps/docker/logs/search/app
 sudo chown -R 8983:docker /apps/docker/logs/search/solr
+sudo chown -R vagrant:docker /apps/docker/volumes/search/db
 docker network create -d overlay --attachable search_default
 
 openssl req -x509 -new -newkey rsa:2048 -nodes \
@@ -80,3 +78,28 @@ openssl req -x509 -new -newkey rsa:2048 -nodes \
 
 docker secret create fcrepo-jenkins-cert.v1 /tmp/fcrepo-jenkins.cert
 docker secret create fcrepo-jenkins-key.v1 /tmp/fcrepo-jenkins.key
+
+# -- staff_blog
+docker network create -d overlay --attachable staff_blog_default
+mkdir -p /apps/docker/volumes/staff-blog/db
+sudo chown -R 999:vagrant /apps/docker/volumes/staff-blog/db
+
+# -- solr-textbook setup
+sudo chown -R 8983:8983 /apps/docker/logs/solr-textbook/app
+docker network create -d overlay --attachable solr-textbook_default
+
+# -- solr-plant-patents
+sudo chown -R 8983:8983 /apps/docker/logs/solr-plant-patents/app
+docker network create -d overlay --attachable solr-plant-patents_default
+
+# -- solr-md-newspapers
+sudo chown -R 8983:8983 /apps/docker/logs/solr-md-newspapers/app
+docker network create -d overlay --attachable solr-md-newspapers_default
+
+# -- solr-irroc
+sudo chown -R 8983:8983 /apps/docker/logs/solr-irroc/app
+docker network create -d overlay --attachable solr-irroc_default
+
+# -- solr-scpa-scores
+sudo chown -R 8983:8983 /apps/docker/logs/solr-scpa-scores/app
+docker network create -d overlay --attachable solr-scpa-scores_default
