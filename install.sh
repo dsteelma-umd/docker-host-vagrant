@@ -103,3 +103,6 @@ docker network create -d overlay --attachable solr-irroc_default
 # -- solr-scpa-scores
 sudo chown -R 8983:8983 /apps/docker/logs/solr-scpa-scores/app
 docker network create -d overlay --attachable solr-scpa-scores_default
+
+# -- cms
+docker network create -d overlay --attachable cms_default
